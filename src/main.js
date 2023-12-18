@@ -1,18 +1,7 @@
 import kaboom from "kaboom";
 import { MetaMaskSDK } from '@metamask/sdk';
-// import { TomochainTestnet } from "@thirdweb-dev/chains";
-// import { ThirdwebSDK } from "@thirdweb-dev/sdk";
-
-// If used on the FRONTEND pass your 'clientId'
-// const sdk = new ThirdwebSDK(TomochainTestnet, {
-//   clientId: "74f4385f3be3a301460ee15bb7925a0b",
-// });
-
-// const contract = await sdk.getContract("0x73D43d99866A8545c3a19C7Ca0E3Ec9Ca13cb030");
-
-// Should delete when deploy
-// const sercretKey ="Io41-dzIYbi0znChMxkTSnfDk3iOTPKYJWLe4ZIVyLCyxNDtMZJU7BIOXxJocx2f7bBuJ0Syr-j4JRpmaZSWmQ";
-
+import { TomochainTestnet } from "@thirdweb-dev/chains";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 
 function movement() {
   const { vec2, dt } = k;
@@ -448,7 +437,7 @@ k.scene("airdrop", (levelIdx) => {
         width: k.width(),
         height: k.height(),
         }),
-        k.pos(k.width() / 3, k.height() / 1.2),
+        k.pos(k.width() / 4, k.height() / 4),
       ])
       
      } else {
@@ -458,12 +447,20 @@ k.scene("airdrop", (levelIdx) => {
     // user rejects the request to "add chain" or param values are wrong, maybe you didn't use hex above for `chainId`?
     console.log(`Error: ${error.message}`)
   }
+
+
 	// const MMSDK = new MetaMaskSDK();
 	// MMSDK.init();
 	// const ethereum = MMSDK.getProvider(); 
 	k.burp();
 	// ethereum.request({ method: 'eth_requestAccounts', params: [] });
-  })
+})
+
+// const sdk = new ThirdwebSDK(TomochainTestnet, {
+//   clientId: "74f4385f3be3a301460ee15bb7925a0b",
+// });
+//   const contract = await sdk.getContract("0x73D43d99866A8545c3a19C7Ca0E3Ec9Ca13cb030");
+//   const sercretKey ="Io41-dzIYbi0znChMxkTSnfDk3iOTPKYJWLe4ZIVyLCyxNDtMZJU7BIOXxJocx2f7bBuJ0Syr-j4JRpmaZSWmQ";
 
   // level layouts
   const levels = [
@@ -611,18 +608,18 @@ k.scene("airdrop", (levelIdx) => {
 	destroy(item);
   }));
 
-  player.onCollide("door", () => {
-    k.shake();
-    if (hasKey) {
-      if (levelIdx + 1 < levels.length) {
-        k.go("wallet", levelIdx + 1);
-      } else {
-        k.go("wallet-win");
-      }
-    } else {
-      dialog.say("you got no key!");
-    }
-  });
+  // player.onCollide("door", () => {
+  //   k.shake();
+  //   if (hasKey) {
+  //     if (levelIdx + 1 < levels.length) {
+  //       k.go("wallet", levelIdx + 1);
+  //     } else {
+  //       k.go("wallet-win");
+  //     }
+  //   } else {
+  //     dialog.say("you got no key!");
+  //   }
+  // });
 
   // talk on touch
   player.onCollide("character", (ch) => {
@@ -671,7 +668,7 @@ k.scene("wallet-win", () => {
 
 	k.add([
 	  k.color(29, 29, 29),
-	  k.text('Press space to begin!', {
+	  k.text('Press space to return', {
 		width: k.width(),
 		height: k.height(),
 	  }),
