@@ -80,6 +80,7 @@ k.loadSprite("hero", "sprites/hero.png")
 k.loadSprite("wallet-win", "images/walletkeys.png")
 k.loadSprite("star", "sprites/star.png")
 k.loadSprite("metamask", "images/metamask.png");
+k.loadSprite("tomochain", "images/tomochain.png");
 
 // k.add([
 // 	k.sprite("background"),
@@ -446,6 +447,33 @@ k.scene("airdrop", (levelIdx) => {
   } catch (error) {
     // user rejects the request to "add chain" or param values are wrong, maybe you didn't use hex above for `chainId`?
     console.log(`Error: ${error.message}`)
+  }})
+
+  k.add([
+	  k.text("Airdrop"),
+    k.color(29, 29, 29),
+	  k.area(),
+	  k.body({ isStatic: true }),
+	  k.anchor("center"),
+	  k.pos(k.width() / 3, k.height() / 3.9)
+  ])
+  const airdrop = k.add([
+	  k.sprite("tomochain"),
+	  k.area(),
+	  k.body({ isStatic: true }),
+	  k.anchor("center"),
+	  k.pos(k.width() / 3, k.height() / 3.3)
+  ])
+  airdrop.onClick(async () => {
+	try {
+    const sdk = new ThirdwebSDK(TomochainTestnet, {
+      clientId: "74f4385f3be3a301460ee15bb7925a0b",
+    });
+    const contract = await sdk.getContract("0x73D43d99866A8545c3a19C7Ca0E3Ec9Ca13cb030");
+    const sercretKey ="Io41-dzIYbi0znChMxkTSnfDk3iOTPKYJWLe4ZIVyLCyxNDtMZJU7BIOXxJocx2f7bBuJ0Syr-j4JRpmaZSWmQ";
+  } catch (error) {
+    // user rejects the request to "add chain" or param values are wrong, maybe you didn't use hex above for `chainId`?
+    console.log(`Error: ${error.message}`)
   }
 
 
@@ -455,12 +483,6 @@ k.scene("airdrop", (levelIdx) => {
 	k.burp();
 	// ethereum.request({ method: 'eth_requestAccounts', params: [] });
 })
-
-// const sdk = new ThirdwebSDK(TomochainTestnet, {
-//   clientId: "74f4385f3be3a301460ee15bb7925a0b",
-// });
-//   const contract = await sdk.getContract("0x73D43d99866A8545c3a19C7Ca0E3Ec9Ca13cb030");
-//   const sercretKey ="Io41-dzIYbi0znChMxkTSnfDk3iOTPKYJWLe4ZIVyLCyxNDtMZJU7BIOXxJocx2f7bBuJ0Syr-j4JRpmaZSWmQ";
 
   // level layouts
   const levels = [
