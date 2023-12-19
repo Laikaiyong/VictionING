@@ -82,6 +82,7 @@ k.loadSprite("wallet-win", "images/walletkeys.png");
 k.loadSprite("star", "sprites/star.png");
 k.loadSprite("metamask", "images/metamask.png");
 k.loadSprite("tomochain", "images/tomochain.png");
+k.loadSprite("faucet", "images/faucet.png");
 
 // k.add([
 // 	k.sprite("background"),
@@ -153,7 +154,7 @@ k.scene("start", () => {
   });
 
   // Airdrop
-  k.add([k.pos(580, 570), k.text("Airdrop"), k.color(29, 29, 29)]);
+  k.add([k.pos(580, 570), k.text("Mint"), k.color(29, 29, 29)]);
 
   const selectStory3 = k.add([
     k.rect(200, 200, {
@@ -417,19 +418,32 @@ k.scene("airdrop", (levelIdx) => {
   });
 
   k.add([
-    k.text("Airdrop"),
+    k.text("Mint"),
     k.color(29, 29, 29),
     k.area(),
     k.body({ isStatic: true }),
     k.anchor("center"),
-    k.pos(k.width() / 3, k.height() / 3.9),
+    k.pos(k.width() / 3, k.height() / 3.0),
   ]);
+
+  const faucet = k.add([
+    k.sprite("faucet"),
+    k.area(),
+    k.body({ isStatic: true }),
+    k.anchor("center"),
+    k.pos(k.width() / 1.5, k.height() / 2.5),
+  ]);
+
+  faucet.onClick(() => {
+    window.open('https://faucet.testnet.tomochain.com/', '_blank');
+  })
+  
   const airdrop = k.add([
     k.sprite("tomochain"),
     k.area(),
     k.body({ isStatic: true }),
     k.anchor("center"),
-    k.pos(k.width() / 3, k.height() / 3.3),
+    k.pos(k.width() / 3, k.height() / 2.5),
   ]);
 
   airdrop.onClick(async () => {
@@ -447,7 +461,16 @@ k.scene("airdrop", (levelIdx) => {
       });
       const contract = await sdk.getContract("0x73D43d99866A8545c3a19C7Ca0E3Ec9Ca13cb030");
 
-      const data = await contract.call("mintTo", [signer.getAddress(), 10]);
+      const data = await contract.call("mintTo", [signer.getAddress(), 100]);
+
+      k.add([
+        k.color(29, 29, 29),
+        k.text("Minted 100 VT Token", {
+          width: k.width(),
+          height: k.height(),
+        }),
+        k.pos(k.width() / 3, k.height() / 1),
+      ]);
       console.log(data);
     } catch (error) {
       // user rejects the request to "add chain" or param values are wrong, maybe you didn't use hex above for `chainId`?
